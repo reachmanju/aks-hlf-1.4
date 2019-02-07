@@ -24,7 +24,7 @@ spec:
         - name: CHANNEL_NAME
           value: channel1
         - name: CHAINCODE_NAME
-          value: "nodecc"
+          value: "fabcar"
         - name: CHAINCODE_VERSION
           value: "1.0"
         - name: FABRIC_CFG_PATH
