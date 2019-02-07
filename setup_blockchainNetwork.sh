@@ -193,7 +193,7 @@ echo "Join Channel Completed Successfully"
 echo -e "\nCreating installchaincode job"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/chaincode_install.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/chaincode_install_node.yaml
-sleep 25
+sleep 35
 
 JOBSTATUS=$(kubectl get jobs |grep chaincodeinstall |awk '{print $2}')
 while [ "${JOBSTATUS}" != "1/1" ]; do
@@ -211,7 +211,7 @@ echo "Chaincode Install Completed Successfully"
 echo -e "\nCreating chaincodeinstantiate job"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/chaincode_instantiate.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/chaincode_instantiate_node.yaml
-sleep 25
+sleep 60
 
 JOBSTATUS=$(kubectl get jobs |grep chaincodeinstantiate |awk '{print $2}')
 while [ "${JOBSTATUS}" != "1/1" ]; do
