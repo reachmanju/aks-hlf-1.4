@@ -42,10 +42,9 @@ spec:
       name: couchdb
   selector:
     app: hlf-couchdb1
-    release: cdb-peer1
 ---
 # Source: hlf-couchdb/templates/deployment.yaml
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: cdb-peer1-hlf-couchdb
@@ -138,7 +137,7 @@ spec:
     app: hlf-couchdb2
 ---
 # Source: hlf-couchdb/templates/deployment.yaml
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: cdb-peer2-hlf-couchdb
