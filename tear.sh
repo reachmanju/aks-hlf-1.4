@@ -11,7 +11,10 @@ kubectl delete -f ${KUBECONFIG_FOLDER}/chaincode_install.yaml
 kubectl delete -f ${KUBECONFIG_FOLDER}/join_channel.yaml
 kubectl delete -f ${KUBECONFIG_FOLDER}/create_channel.yaml
 
+kubectl delete -f ${KUBECONFIG_FOLDER}/couchdb_deployment.yaml
+kubectl delete -f ${KUBECONFIG_FOLDER}/peersDeployment2.yaml
 kubectl delete -f ${KUBECONFIG_FOLDER}/peersDeployment.yaml
+
 kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-services.yaml
 
 kubectl delete -f ${KUBECONFIG_FOLDER}/configtxgen.yaml

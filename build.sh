@@ -129,11 +129,17 @@ done
 # Create peers, ca, orderer using Kubernetes Deployments
 echo -e "\nCreating new Deployment to create four peers in network"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/peersDeployment.yaml"
-kubectl create -f ${KUBECONFIG_FOLDER}/peersDeployment2.yaml
-sleep 30
+
 
 kubectl create -f ${KUBECONFIG_FOLDER}/couchdb_deployment.yaml
-sleep 30
+sleep 180
+
+kubectl create -f ${KUBECONFIG_FOLDER}/couchdb_service.yaml
+sleep 25
+
+
+kubectl create -f ${KUBECONFIG_FOLDER}/peersDeployment2.yaml
+sleep 15
 
 echo "Checking if all deployments are ready"
 
