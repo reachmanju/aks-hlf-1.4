@@ -1,0 +1,201 @@
+---
+# Source: hlf-couchdb/templates/pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: cdb-peer1-hlf-couchdb
+  labels:
+    app: hlf-couchdb
+    heritage: "Tiller"
+    release: "cdb-peer1"
+    chart: hlf-couchdb-1.0.5
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+---
+# Source: hlf-couchdb/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cdb-peer1-hlf-couchdb
+  labels:
+    app: hlf-couchdb
+    heritage: "Tiller"
+    release: "cdb-peer1"
+    chart: hlf-couchdb-1.0.5
+spec:
+  type: NodePort
+  ports:
+    - nodePort: 5984
+      targetPort: 5984
+      port: 5984
+      protocol: TCP
+      name: couchdb
+  selector:
+    app: hlf-couchdb
+    release: cdb-peer1
+---
+# Source: hlf-couchdb/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cdb-peer1-hlf-couchdb
+  labels:
+    app: hlf-couchdb
+    heritage: "Tiller"
+    release: "cdb-peer1"
+    chart: hlf-couchdb-1.0.5
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hlf-couchdb
+      release: cdb-peer1
+  template:
+    metadata:
+      labels:
+        app: hlf-couchdb
+        heritage: "Tiller"
+        release: "cdb-peer1"
+        chart: hlf-couchdb-1.0.5
+    spec:
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: cdb-peer1-hlf-couchdb
+      containers:
+        - name: hlf-couchdb
+          image: "hyperledger/fabric-couchdb:0.4.10"
+          imagePullPolicy: IfNotPresent
+          env:
+          - COUCHDB_USERNAME:
+              name: "administrator"
+          - COUCHDB_USER:
+              name: "administrator"
+          - COUCHDB_PASSWORD:
+              name: "Passw0rd1!"
+          volumeMounts:
+          - mountPath: /opt/couchdb/data
+            name: data
+          ports:
+            - name: couchdb
+              containerPort: 5984
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 5984
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            tcpSocket:
+              port: 5984
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+            periodSeconds: 5
+          resources:
+            {}
+---
+# Source: hlf-couchdb/templates/pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: cdb-peer2-hlf-couchdb
+  labels:
+    app: hlf-couchdb
+    heritage: "Tiller"
+    release: "cdb-peer2"
+    chart: hlf-couchdb-1.0.5
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"
+---
+# Source: hlf-couchdb/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cdb-peer2-hlf-couchdb
+  labels:
+    app: hlf-couchdb
+    heritage: "Tiller"
+    release: "cdb-peer2"
+    chart: hlf-couchdb-1.0.5
+spec:
+  type: NodePort
+  ports:
+    - nodePort: 5984
+      targetPort: 5984
+      port: 5984
+      protocol: TCP
+      name: couchdb
+  selector:
+    app: hlf-couchdb
+    release: cdb-peer2
+---
+# Source: hlf-couchdb/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cdb-peer1-hlf-couchdb
+  labels:
+    app: hlf-couchdb
+    heritage: "Tiller"
+    release: "cdb-peer2"
+    chart: hlf-couchdb-1.0.5
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hlf-couchdb
+      release: cdb-peer2
+  template:
+    metadata:
+      labels:
+        app: hlf-couchdb
+        heritage: "Tiller"
+        release: "cdb-peer2"
+        chart: hlf-couchdb-1.0.5
+    spec:
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: cdb-peer2-hlf-couchdb
+      containers:
+        - name: hlf-couchdb
+          image: "hyperledger/fabric-couchdb:0.4.10"
+          imagePullPolicy: IfNotPresent
+          env:
+          - COUCHDB_USERNAME:
+              name: "administrator"
+          - COUCHDB_USER:
+              name: "administrator"
+          - COUCHDB_PASSWORD:
+              name: "Passw0rd1!"
+          volumeMounts:
+          - mountPath: /opt/couchdb/data
+            name: data
+          ports:
+            - name: couchdb
+              containerPort: 5984
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 5984
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            tcpSocket:
+              port: 5984
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+            periodSeconds: 5
+          resources:
+            {}
+---
