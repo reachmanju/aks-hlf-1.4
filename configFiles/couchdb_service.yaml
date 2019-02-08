@@ -1,0 +1,36 @@
+---
+# Source: hlf-couchdb/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cdb-peer1-hlf-couchdb
+  labels:
+    app: hlf-couchdb1
+spec:
+  type: NodePort
+  ports:
+    - nodePort: 30084
+      targetPort: 5984
+      port: 30084
+      protocol: TCP
+      name: couchdb
+  selector:
+    app: hlf-couchdb1
+---
+# Source: hlf-couchdb/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cdb-peer2-hlf-couchdb
+  labels:
+    app: hlf-couchdb2
+spec:
+  type: NodePort
+  ports:
+    - nodePort: 30184
+      targetPort: 5984
+      port: 30184
+      protocol: TCP
+      name: couchdb
+  selector:
+    app: hlf-couchdb2
