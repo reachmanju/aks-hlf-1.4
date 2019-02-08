@@ -1,4 +1,19 @@
 ---
+# Source: hlf-couchdb/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cdb-peer1-hlf-couchdb
+  labels:
+    app: hlf-couchdb
+    heritage: "Tiller"
+    release: "cdb-peer1"
+    chart: hlf-couchdb-1.0.5
+type: Opaque
+data:
+  COUCHDB_USERNAME:  "administrator"
+  COUCHDB_PASSWORD: "Passw0rd1!"
+---
 # Source: hlf-couchdb/templates/pvc.yaml
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -29,9 +44,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - nodePort: 5984
+    - nodePort: 30084
       targetPort: 5984
-      port: 5984
+      port: 30084
       protocol: TCP
       name: couchdb
   selector:
@@ -70,13 +85,9 @@ spec:
         - name: hlf-couchdb
           image: "hyperledger/fabric-couchdb:0.4.10"
           imagePullPolicy: IfNotPresent
-          env:
-          - COUCHDB_USERNAME:
-              name: "administrator"
-          - COUCHDB_USER:
-              name: "administrator"
-          - COUCHDB_PASSWORD:
-              name: "Passw0rd1!"
+          envFrom:
+          - secretRef:
+              name: cdb-peer1-hlf-couchdb
           volumeMounts:
           - mountPath: /opt/couchdb/data
             name: data
@@ -170,13 +181,9 @@ spec:
         - name: hlf-couchdb
           image: "hyperledger/fabric-couchdb:0.4.10"
           imagePullPolicy: IfNotPresent
-          env:
-          - COUCHDB_USERNAME:
-              name: "administrator"
-          - COUCHDB_USER:
-              name: "administrator"
-          - COUCHDB_PASSWORD:
-              name: "Passw0rd1!"
+          envFrom:
+          - secretRef:
+              name: cdb-peer1-hlf-couchdb
           volumeMounts:
           - mountPath: /opt/couchdb/data
             name: data
