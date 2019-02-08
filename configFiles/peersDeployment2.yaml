@@ -174,7 +174,7 @@ spec:
         - name: CORE_LEDGER_STATE_STATEDATABASE
           value: CouchDB
         - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-          value: peer1-couchdb:5984
+          value: cdb-peer1-hlf-couchdb:30084
         - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
           value: "administrator"
         - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
@@ -266,7 +266,7 @@ spec:
         - name: CORE_LEDGER_STATE_STATEDATABASE
           value: CouchDB
         - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-          value: peer1-couchdb:5984
+          value: cdb-peer2-hlf-couchdb:30184
         - name: CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME
           value: "administrator"
         - name: CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
